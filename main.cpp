@@ -238,7 +238,6 @@ bool solveMaze(int r, int c, char **maze, int lastD, int prior, int pare){
         switch (maze[r][c]) {
             case '0' ... '9':
                 return WhichWay ('n', r, c, maze, lastD, prior, pare);
-
             case '+':
             case '-':
             case '*':
@@ -248,7 +247,10 @@ bool solveMaze(int r, int c, char **maze, int lastD, int prior, int pare){
                 return WhichWay ('l', r, c, maze, lastD, prior, pare + 1);
             case ')':
                 if (pare == 0){
-                    solveMaze(path.row_top(), path.column_top(), maze, 0, lastD - 1, pare - 1);
+                    path.pop();
+                    r = path.row_top();
+                    c = path.column_top();
+                    return solveMaze(r, c, maze, 0, lastD - 1, pare);
                 } else {
                     return WhichWay ('r', r, c, maze, lastD, prior, pare - 1);
                 }
@@ -270,11 +272,11 @@ bool WhichWay (char type, int r, int c, char** maze, int lastD, int prior, int p
 
     } else if ( IsFineToGo(type, r, c - 1, maze) && prior >= 2) {
         path.push(r, c - 1);
-        return solveMaze(r, c - 1, maze, 1, 4, pare);
+        return solveMaze(r, c - 1, maze, 2, 4, pare);
 
     } else if ( IsFineToGo(type, r - 1, c, maze) && prior >= 1) {
         path.push(r - 1, c);
-        return solveMaze(r - 1, c, maze, 2, 4, pare);
+        return solveMaze(r - 1, c, maze, 1, 4, pare);
 
     } else {
         if (prior == 0)
