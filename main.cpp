@@ -189,7 +189,6 @@ int main() {
         } else
             cout << "No" << endl;
 
-
         path.init();
 
         for (int i = 0; i < maxRow; i++){
@@ -219,7 +218,7 @@ char** makeMatrix(int r, int c){
 
 bool solveMaze(int r, int c, char **maze, int lastD, int prior, int pare){
 
-    //cout << r << ' ' << c << endl;
+    cout << r << ' ' << c << endl;
 
     if (r == maxRow - 1 && c == maxColumn - 1){
         if (maze[r][c] == '+' || maze[r][c] == '-' || maze[r][c] == '*' || maze[r][c] == '/' || maze[r][c] == '(')
@@ -285,8 +284,9 @@ bool WhichWay (char type, int r, int c, char** maze, int lastD, int prior, int p
         path.pop();
         r = path.row_top();
         c = path.column_top();
+        if (r == -1 || c == -1)
+            return false;
         return solveMaze(r, c, maze, 0, lastD - 1, pare);
-
     }
 }
 
