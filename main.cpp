@@ -218,7 +218,7 @@ char** makeMatrix(int r, int c){
 
 bool solveMaze(int r, int c, char **maze, int lastD, int prior, int pare){
 
-    cout << r << ' ' << c << endl;
+    //cout << r << ' ' << c << endl;
 
     if (r == maxRow - 1 && c == maxColumn - 1){
         if (maze[r][c] == '+' || maze[r][c] == '-' || maze[r][c] == '*' || maze[r][c] == '/' || maze[r][c] == '(')
