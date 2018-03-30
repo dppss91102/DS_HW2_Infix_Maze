@@ -1,327 +1,289 @@
 #include <iostream>
 using namespace std;
 
-char** makeMatrix(int r, int c);
-bool solveMaze(int r, int c, char **maze, int lastD, int prior);
-bool WhichWay (char type, int r, int c, char** maze, int lastD, int prior);
-bool IsFineToGo(char type, int r, int c, char **maze);
-bool isOper(char c);
-bool isNum(char c);
+char** makeMatrix(int w, int h);
+bool solveMaze(char** matrix, int r, int c);
+bool isOperator(char c);
+bool isNumber(char c);
+int width, height;
 
-string InfixToPostfix(string in);
+string infix_to_postfix(string in);
 int getPriority (char op);
 
 #define MAX 200
-static int maxRow, maxColumn;
-
-class Path {
-public:
-    int top;
-    int pare;
+class Path{
+private:
     int a[MAX][2];
-    Path() {
-        a[0][0] = 0;
-        a[0][1] = 0;
-        top = 0;
-        pare = 0;
-    };
-    void init();
-    bool push(int row, int column);
-    int row_top();
-    int column_top();
+    int top;
+public:
+    int pare;//balance of parentheses
+    Path(){
+        top = -1;
+        for (int i = 0; i < MAX; ++i) {
+            a[i][0] = -1;
+            a[i][1] = -1;
+        }
+    }
+    bool push(int r, int c);
     bool pop();
-    bool contains(int row, int column);
+    int top_r();
+    int top_c();
+    bool contains(int r, int c);
+    bool isEmpty();
 };
-
-bool Path::push(int row, int column) {
-    if (Path::top == MAX) {
-        //Stack overflow.
+bool Path::push(int r, int c) {
+    if (top == MAX - 1){
+        //Stack Overflow
         return false;
     } else{
-        a[++top][0] = row;
-        a[top][1] = column;
+        a[++top][0] = r;
+        a[top][1]   = c;
         return true;
-    }
-}
-int Path::row_top() {
-    if (top == -1){
-        //Stack is empty.
-        return -1;
-    } else{
-        return a[top][0];
-    }
-}
-int Path::column_top() {
-    if (top == -1){
-        //Stack is empty.
-        return -1;
-    } else{
-        return a[top][1];
     }
 }
 bool Path::pop() {
-    if (top == -1){
-        //Stack is empty.
+    if(top == -1){
+        //Path empty
         return false;
     } else{
-        a[top][0] = 0;
-        a[top--][1] = 0;
+        a[top][0]   = -1;
+        a[top--][1] = -1;
         return true;
     }
 }
-bool Path::contains(int row, int column) {
+int Path::top_r() {
+    return a[top][0];
+}
+int Path::top_c() {
+    return a[top][1];
+}
+bool Path::contains(int r, int c) {
+    if (top < 0)
+        return false;//Path empty
     for (int i = 0; i <= top; ++i) {
-        if (a[i][0] == row && a[i][1] == column)
+        if (r == a[i][0] && c == a[i][1])
             return true;
     }
-
     return false;
 }
-void Path::init() {
-    for (int i = 0; i < MAX; i ++){
-        a[i][0] = 0;
-        a[i][1] = 0;
-    }
-    top = 0;
+bool Path::isEmpty() {
+    return top == -1;
 }
-
 Path path;
 
 class Stack{
-public:
+private:
     int top;
     char a[MAX];
-    Stack() {
-        for (int i = 0; i < MAX ; i++)
-            a[i] = '\0';
+public:
+    Stack(){
         top = -1;
-    };
-    bool push(char value);
-    char pop();
-    char at(int i);
-    char at_top();
+        for (int i = 0; i < MAX; ++i) {
+            a[i] = '\0';
+        }
+    }
+    bool push(char c);
+    bool pop();
+    char top_o();
+    bool isEmpty();
 };
-bool Stack::push(char value){
-    if (Stack::top == MAX){
-        //Stack overflow.
+bool Stack::push(char c){
+    if (top == MAX - 1){
+        //Stack Overflow
         return false;
     } else{
-        a[++top] = value;
+        a[++top] = c;
         return true;
     }
 }
-char Stack::pop(){
-    if (Stack::top == -1){
-        //Stack is Empty
-        return 'e';
+bool Stack::pop(){
+    if(top == -1){
+        //Path empty
+        return false;
     } else{
-        char temp = a[top];
         a[top--] = '\0';
-        return temp;
+        return true;
     }
 }
-char Stack::at(int i){
-    if (i >= 0 && i <= top)
-        return a[i];
-    else
-        return 'e';
+char Stack::top_o() {
+    return a[top];
 }
-char Stack::at_top(){
-    if (top != -1)
-        return a[top];
-    else
-        return 'e';
+bool Stack::isEmpty() {
+    return top == -1;
 }
 
-int main() {
+int main(){
     int n;
-    char **matrix;
+    char** matrix;
+    string infix_str, postfix_str;
 
     cin >> n;
     cout << n << endl;
 
-    while (n>0){
-        cin >> maxColumn;
-        cin >> maxRow;
-        matrix = makeMatrix(maxRow, maxColumn);
+    while (n > 0){
+        cin >> width;
+        cin >> height;
+        cout << width << endl;
+        cout << height << endl;
 
-        cout << maxRow << endl;
-        cout << maxColumn << endl;
-        for (int i = 0; i < maxRow; ++i){
-            for (int j = 0; j < maxColumn; ++j) {
+        matrix = makeMatrix(width, height);
+
+        for (int i = 0; i < height; i++){
+            for (int j = 0; j < width; j++){
                 cout << matrix[i][j] << ' ';
             }
             cout << endl;
         }
 
-        if (solveMaze(0, 0, matrix, 0, 4)) {
+        if (solveMaze(matrix, 0, 0)) {
             cout << "Yes" << endl;
 
-            std::string infix_str;
-            int num = path.top;
-            for (int i = 0; i <= num; i++) {
-                infix_str.insert(0, 1, matrix[path.row_top()][path.column_top()]);
-                path.pop();
-            }
+            do {
+                infix_str = matrix[path.top_r()][path.top_c()] + infix_str;
+            } while (path.pop() && !path.isEmpty());
 
             for (int i = 0; i < infix_str.length(); i++) {
-                switch (infix_str.at(i)) {
-                    case '0' ... '9':
-                        if (i == infix_str.length() - 1) {
-                            infix_str += ' ';
-                            break;
-                        } else {
-                            if (infix_str.at(i + 1) > '9' || infix_str.at(i + 1) < '0')
-                                infix_str.insert(i + 1, 1, ' ');
-                            break;
+                if (isNumber(infix_str.at(i))) {
+                    if (i == infix_str.length() - 1) {
+                        infix_str += ' ';
+                    } else {
+                        if (!isNumber(infix_str.at(i + 1))) {
+                            infix_str.insert(i + 1, 1, ' ');
+                            i++;
                         }
-                    case '+':
-                    case '-':
-                    case '*':
-                    case '/':
-                    case '(':
-                    case ')':
-                        infix_str.insert(i + 1, 1, ' ');
-                        break;
+                    }
+                } else if (infix_str.at(i) == ' '){
+                    continue;
+                } else {
+                    infix_str.insert(i + 1, 1, ' ');
+                    i++;
                 }
             }
 
             cout << infix_str << endl;
 
-            string postfix = InfixToPostfix(infix_str);
-            cout << postfix << endl;
+            postfix_str = infix_to_postfix(infix_str);
+
+            cout << postfix_str << endl;
+
         } else
             cout << "No" << endl;
 
-        path.init();
-
-        for (int i = 0; i < maxRow; i++){
+        //init for next input
+        infix_str = postfix_str = "";
+        for (int i = 0; i < width; i++){
             free(matrix[i]);
         }
         free(matrix);
-        maxRow = maxColumn = 0;
         n--;
     }
-    return 0;
 }
 
-char** makeMatrix(int r, int c){
+char** makeMatrix(int w, int h){
+    auto temp = (char**)malloc(sizeof(char*) * h);
+    for (int i = 0; i < h; i++){
+        temp[i] = (char*)malloc(sizeof(char) * w);
+    }
 
-    auto ** temp = (char **)malloc(sizeof(char *) * r);
-    for (int k = 0; k < r; ++k)
-        temp[k] = (char *)malloc(sizeof(char) * c);
-
-    for (int i = 0; i < r; ++i){
-        for (int j = 0; j < c; ++j) {
+    for (int i = 0; i < h; i++){
+        for (int j = 0; j < w; j++){
             cin >> temp[i][j];
         }
     }
 
     return temp;
 }
+bool solveMaze(char** matrix, int r, int c){
 
-bool solveMaze(int r, int c, char **maze, int lastD, int prior){
+    if (c < 0 || r < 0 || c >= width || r >= height)
+        return false;
 
-    cout << r << ' ' << c << ' ' << maze[r][c] << ' ' << path.pare << endl;
+    //cout << r << ' ' << c << ' ' << matrix[r][c] << endl;
 
-    if (r == maxRow - 1 && c == maxColumn - 1){
-        if (isOper(maze[r][c]) || maze[r][c] == '(')
-            return false;
-        if (path.pare != 0) {
-            path.pop();
-            r = path.row_top();
-            c = path.column_top();
-            return solveMaze(r, c, maze, 0, lastD - 1);
-        }
-
-        return true;
-    } else {
-        switch (maze[r][c]) {
+    if (c != 0 || r != 0) {
+        char last = matrix[path.top_r()][path.top_c()];
+        switch (last) {
             case '0' ... '9':
-                return WhichWay ('n', r, c, maze, lastD, prior);
+                if (matrix[r][c] == '(')
+                    return false;
+                break;
             case '+':
             case '-':
             case '*':
             case '/':
-                return WhichWay ('c', r, c, maze, lastD, prior);
+                if (matrix[r][c] == ')' || isOperator(matrix[r][c]))
+                    return false;
+                break;
             case '(':
-                if (r == 0 && c == 0)
-                    path.pare++;
-                return WhichWay ('l', r, c, maze, lastD, prior);
+                if (matrix[r][c] == ')' || isOperator(matrix[r][c]))
+                    return false;
+                break;
             case ')':
-                return WhichWay ('r', r, c, maze, lastD, prior);
-
-            default:
-                cout << "Unacceptable symbols detected." << endl;
+                if (matrix[r][c] == '(' || isNumber(matrix[r][c]))
+                    return false;
                 break;
         }
     }
-}
 
-bool WhichWay (char type, int r, int c, char** maze, int lastD, int prior){
-    if ( IsFineToGo(type, r + 1, c, maze) && prior >= 4) {
-        path.push(r + 1, c);
-        return solveMaze(r + 1, c, maze, 4, 4);
-
-    } else if ( IsFineToGo(type, r, c + 1, maze) && prior >= 3) {
-        path.push(r, c + 1);
-        return solveMaze(r, c + 1, maze, 3, 4);
-
-    } else if ( IsFineToGo(type, r, c - 1, maze) && prior >= 2) {
-        path.push(r, c - 1);
-        return solveMaze(r, c - 1, maze, 2, 4);
-
-    } else if ( IsFineToGo(type, r - 1, c, maze) && prior >= 1) {
-        path.push(r - 1, c);
-        return solveMaze(r - 1, c, maze, 1, 4);
-
-    } else {
-        if (maze[r][c] == '(')
+    if (c == width - 1 && r == height - 1){
+        if (isOperator(matrix[r][c]) || matrix[r][c] == '(')
+            return false;
+        if (matrix[r][c] == ')')
             path.pare--;
-        else if (maze[r][c] == ')')
+        if (path.pare != 0)
+            return false;
+        else{
+            path.push(r, c);
+            return true;
+        }
+
+    } else{
+
+        if (path.contains(r, c))
+            return false;
+
+        if (matrix[r][c] == '(')
             path.pare++;
-        path.pop();
-        r = path.row_top();
-        c = path.column_top();
-        if (r == -1 || c == -1)
+        else if (matrix[r][c] == ')')
+            path.pare--;
+
+        if (path.pare < 0) {
+            path.pare++;
             return false;
-        return solveMaze(r, c, maze, 0, lastD - 1);
-    }
-}
+        }
 
-bool  IsFineToGo(char type, int r, int c, char **maze) {
+        if (!path.push(r, c))
+            cout << "Path::push error." << endl;
 
-    if (r < 0 || r >= maxRow || c < 0 || c >= maxColumn || path.contains(r, c)){
+        if (solveMaze(matrix, r + 1, c))
+            return true;
+        if (solveMaze(matrix, r, c + 1))
+            return true;
+        if (solveMaze(matrix, r, c - 1))
+            return true;
+        if (solveMaze(matrix, r - 1, c))
+            return true;
+
+        if (matrix[r][c] == '(')
+            path.pare--;
+        else if (matrix[r][c] == ')')
+            path.pare++;
+
+        if (!path.pop())
+            cout << "Path::pop error." << endl;
+
         return false;
     }
-
-    if (maze[r][c] == '(')
-        path.pare++;
-    else if (maze[r][c] == ')')
-        path.pare--;
-
-    if (path.pare < 0) {
-        path.pare++;
-        return false;
-    }
-    char next = maze[r][c];
-
-    //'c' for computation, 'r' for right parenthesis, 'l' for left parenthesis
-    switch (type) {
-        case 'c':
-        case 'l':
-            return !isOper(next) && next != ')';
-        case 'r':
-            return !isNum(next) && next != '(';
-        case 'n':
-            return next != '(';
-        default:
-            return false;
-    }
+}
+bool isOperator(char c){
+    return c == '+' || c == '-' || c == '*' || c == '/';
+}
+bool isNumber(char c){
+    return c > '0' && c < '9';
 }
 
-string InfixToPostfix(string in){
-    string out;
+string infix_to_postfix(string in){
+    string out = "";
     Stack operands;
     int p = 0;
 
@@ -334,12 +296,10 @@ string InfixToPostfix(string in){
                 operands.push(i);
                 break;
             case ')':
-                p = operands.top;
-                while (operands.at(p) != '('){
+                while (operands.top_o() != '('){
                     out += ' ';
-                    out += operands.at(p);
+                    out += operands.top_o();
                     operands.pop();
-                    p--;
                 }
                 operands.pop();
                 break;
@@ -348,14 +308,14 @@ string InfixToPostfix(string in){
             case '*':
             case '/':
                 out += ' ';
-                if (getPriority (i) < getPriority(operands.at_top()) && operands.top != -1) {
-                    while (operands.top != -1 && operands.at_top() != '(') {
-                        out += operands.at_top();
+                if (getPriority(i) < getPriority(operands.top_o()) && !operands.isEmpty()) {
+                    while (!operands.isEmpty() && operands.top_o() != '(') {
+                        out += operands.top_o();
                         out += ' ';
                         operands.pop();
                     }
                     operands.push(i);
-                } else if (getPriority (i) == getPriority(operands.at_top())){
+                } else if (getPriority(i) == getPriority(operands.top_o())){
                     out += i;
                     out += ' ';
                 } else{
@@ -368,17 +328,15 @@ string InfixToPostfix(string in){
 
     }
 
-    while (operands.top != -1){
+    while (!operands.isEmpty()){
         out += ' ';
-        out += operands.at_top();
+        out += operands.top_o();
         operands.pop();
     }
 
     out += ' ';
     return out;
-
 }
-
 int getPriority (char op){
     int opp;
     switch (op){
@@ -399,11 +357,4 @@ int getPriority (char op){
             break;
     }
     return opp;
-}
-
-bool isOper(char c) {
-    return (c == '+' || c == '-' || c == '*' || c == '/');
-}
-bool isNum(char c) {
-    return (c >= '0' && c <= '9');
 }
