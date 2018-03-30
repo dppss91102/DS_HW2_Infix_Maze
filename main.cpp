@@ -223,6 +223,9 @@ bool solveMaze(char** matrix, int r, int c){
                     return false;
                 break;
         }
+    } else{
+        if (matrix[r][c] == ')' || isOperator(matrix[r][c]))
+            return false;
     }
 
     if (c == width - 1 && r == height - 1){
