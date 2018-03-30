@@ -2,8 +2,8 @@
 using namespace std;
 
 char** makeMatrix(int r, int c);
-bool solveMaze(int r, int c, char **maze, int lastD, int prior, int pare);
-bool WhichWay (char type, int r, int c, char** maze, int lastD, int prior, int pare);
+bool solveMaze(int r, int c, char **maze, int prior, int pare);
+bool WhichWay (char type, int r, int c, char** maze, int prior, int pare);
 bool IsFineToGo(char type, int r, int c, char **maze);
 
 string InfixToPostfix(string in);
@@ -27,6 +27,7 @@ public:
     int column_top();
     bool pop();
     bool contains(int row, int column);
+    int lastDir();
 };
 
 bool Path::push(int row, int column) {
@@ -79,6 +80,17 @@ void Path::init() {
         a[i][1] = 0;
     }
     top = 0;
+}
+int Path::lastDir(){
+    if (a[top][0] == a[top - 1][0] + 1){
+        return 4;
+    } else if (a[top][1] == a[top - 1][1] + 1){
+        return 3;
+    } else if (a[top][1] == a[top - 1][1] - 1){
+        return 2;
+    } else{
+        return 1;
+    }
 }
 
 Path path;
@@ -137,8 +149,8 @@ int main() {
     cout << n << endl;
 
     while (n>0){
-        cin >> maxRow;
         cin >> maxColumn;
+        cin >> maxRow;
         matrix = makeMatrix(maxRow, maxColumn);
 
         cout << maxRow << endl;
@@ -150,10 +162,10 @@ int main() {
             cout << endl;
         }
 
-        if (solveMaze(0, 0, matrix, 0, 4, 0)) {
+        if (solveMaze(0, 0, matrix, 4, 0)) {
             cout << "Yes" << endl;
 
-            std::string infix_str;
+            string infix_str;
             int num = path.top;
             for (int i = 0; i <= num; i++) {
                 infix_str.insert(0, 1, matrix[path.row_top()][path.column_top()]);
@@ -216,9 +228,17 @@ char** makeMatrix(int r, int c){
     return temp;
 }
 
-bool solveMaze(int r, int c, char **maze, int lastD, int prior, int pare){
+bool solveMaze(int r, int c, char **maze, int prior, int pare){
 
-    //cout << r << ' ' << c << endl;
+    cout << r << ' ' << c << ' ' << maze[r][c] << endl;
+
+    if (pare < 0){
+        int lastD = path.lastDir();
+        path.pop();
+        r = path.row_top();
+        c = path.column_top();
+        return solveMaze(r, c, maze, lastD - 1, pare + 1);
+    }
 
     if (r == maxRow - 1 && c == maxColumn - 1){
         if (maze[r][c] == '+' || maze[r][c] == '-' || maze[r][c] == '*' || maze[r][c] == '/' || maze[r][c] == '(')
@@ -226,33 +246,27 @@ bool solveMaze(int r, int c, char **maze, int lastD, int prior, int pare){
         if (maze[r][c] == ')')
             pare--;
         if (pare != 0) {
+            int lastD = path.lastDir();
             path.pop();
             r = path.row_top();
             c = path.column_top();
-            return solveMaze(r, c, maze, 0, lastD - 1, pare);
+            return solveMaze(r, c, maze, lastD - 1, pare - (maze[r][c] == ')') ? 1:0);
         }
 
         return true;
     } else {
         switch (maze[r][c]) {
             case '0' ... '9':
-                return WhichWay ('n', r, c, maze, lastD, prior, pare);
+                return WhichWay ('n', r, c, maze, prior, pare);
             case '+':
             case '-':
             case '*':
             case '/':
-                return WhichWay ('c', r, c, maze, lastD, prior, pare);
+                return WhichWay ('c', r, c, maze, prior, pare);
             case '(':
-                return WhichWay ('l', r, c, maze, lastD, prior, pare + 1);
+                return WhichWay ('l', r, c, maze, prior, pare);
             case ')':
-                if (pare == 0){
-                    path.pop();
-                    r = path.row_top();
-                    c = path.column_top();
-                    return solveMaze(r, c, maze, 0, lastD - 1, pare);
-                } else {
-                    return WhichWay ('r', r, c, maze, lastD, prior, pare - 1);
-                }
+                return WhichWay ('r', r, c, maze, prior, pare);
             default:
                 cout << "Unacceptable symbols detected." << endl;
                 break;
@@ -260,33 +274,57 @@ bool solveMaze(int r, int c, char **maze, int lastD, int prior, int pare){
     }
 }
 
-bool WhichWay (char type, int r, int c, char** maze, int lastD, int prior, int pare){
+bool WhichWay (char type, int r, int c, char** maze, int prior, int pare){
+
+    int back;
+    if (maze[r][c] == '(')
+        back = 1;
+    else if (maze[r][c] == ')')
+        back = -1;
+    else
+        back = 0;
+
     if ( IsFineToGo(type, r + 1, c, maze) && prior >= 4) {
         path.push(r + 1, c);
-        return solveMaze(r + 1, c, maze, 4, 4, pare);
+        if (maze[r][c] == '(')
+            pare++;
+        else if (maze[r][c] == ')')
+            pare--;
+        return solveMaze(r + 1, c, maze, 4, pare);
 
     } else if ( IsFineToGo(type, r, c + 1, maze) && prior >= 3) {
         path.push(r, c + 1);
-        return solveMaze(r, c + 1, maze, 3, 4, pare);
+        if (maze[r][c] == '(')
+            pare++;
+        else if (maze[r][c] == ')')
+            pare--;
+        return solveMaze(r, c + 1, maze, 4, pare);
 
     } else if ( IsFineToGo(type, r, c - 1, maze) && prior >= 2) {
         path.push(r, c - 1);
-        return solveMaze(r, c - 1, maze, 2, 4, pare);
+        if (maze[r][c] == '(')
+            pare++;
+        else if (maze[r][c] == ')')
+            pare--;
+        return solveMaze(r, c - 1, maze, 4, pare);
 
     } else if ( IsFineToGo(type, r - 1, c, maze) && prior >= 1) {
         path.push(r - 1, c);
-        return solveMaze(r - 1, c, maze, 1, 4, pare);
+        if (maze[r][c] == '(')
+            pare++;
+        else if (maze[r][c] == ')')
+            pare--;
+        return solveMaze(r - 1, c, maze, 4, pare);
 
     } else {
-        if (prior == 0)
-            return false;
 
+        int lastD = path.lastDir();
         path.pop();
         r = path.row_top();
         c = path.column_top();
         if (r == -1 || c == -1)
             return false;
-        return solveMaze(r, c, maze, 0, lastD - 1, pare);
+        return solveMaze(r, c, maze, lastD - 1, pare - back);
     }
 }
 
@@ -296,7 +334,7 @@ bool  IsFineToGo(char type, int r, int c, char **maze) {
 
     char next = maze[r][c];
 
-    //'c' for computation, 'r' for right parenthesis, 'l' for left parenthesis
+    //'c' for computation, 'r' for right parenthesis, 'l' for left parenthesis, 'n' for numbers
     switch (type) {
         case 'c':
         case 'l':
