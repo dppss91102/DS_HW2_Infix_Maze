@@ -171,7 +171,7 @@ int main(){
 
         //init for next input
         infix_str = postfix_str = "";
-        for (int i = 0; i < width; i++){
+        for (int i = 0; i < height; i++){
             free(matrix[i]);
         }
         free(matrix);
@@ -197,7 +197,7 @@ bool solveMaze(char** matrix, int r, int c){
     if (c < 0 || r < 0 || c >= width || r >= height)
         return false;
 
-    //cout << r << ' ' << c << ' ' << matrix[r][c] << endl;
+    cout << r << ' ' << c << ' ' << matrix[r][c] << endl;
 
     if (c != 0 || r != 0) {
         char last = matrix[path.top_r()][path.top_c()];
@@ -235,9 +235,10 @@ bool solveMaze(char** matrix, int r, int c){
             return false;
         if (matrix[r][c] == ')')
             path.pare--;
-        if (path.pare != 0)
+        if (path.pare != 0) {
+            path.pare++;
             return false;
-        else{
+        } else{
             path.push(r, c);
             return true;
         }

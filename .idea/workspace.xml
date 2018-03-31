@@ -11,8 +11,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa7031e4-b92e-46c4-a590-283ade2bb301" name="Default" comment="">
+    <list default="true" id="fa7031e4-b92e-46c4-a590-283ade2bb301" name="Default" comment="InToPost minor errors corrected&#10;7a3w">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/DS_HW2_Infix_Maze.dir/main.cpp.o" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/DS_HW2_Infix_Maze" afterPath="$PROJECT_DIR$/cmake-build-debug/DS_HW2_Infix_Maze" />
       <change beforePath="$PROJECT_DIR$/main.cpp" afterPath="$PROJECT_DIR$/main.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -39,8 +41,8 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="358" column="1" lean-forward="true" selection-start-line="358" selection-start-column="1" selection-end-line="358" selection-end-column="1" />
+            <state relative-caret-position="226">
+              <caret line="171" column="29" lean-forward="true" selection-start-line="171" selection-start-column="29" selection-end-line="171" selection-end-column="29" />
               <folding>
                 <element signature="e#268#638#1" expanded="false" />
                 <element signature="e#640#834#0" expanded="false" />
@@ -54,11 +56,10 @@
                 <element signature="e#1786#1932#0" expanded="false" />
                 <element signature="e#1933#1975#0" expanded="false" />
                 <element signature="e#1976#2023#0" expanded="false" />
-                <element signature="e#3744#4055#0" expanded="false" />
-                <element signature="e#4056#6269#0" expanded="false" />
-                <element signature="e#6270#6353#0" expanded="false" />
-                <element signature="e#6354#6409#0" expanded="false" />
-                <element signature="e#7841#8206#0" expanded="false" />
+                <element signature="e#3745#4056#0" expanded="false" />
+                <element signature="e#6298#6381#0" expanded="false" />
+                <element signature="e#6382#6437#0" expanded="false" />
+                <element signature="e#7869#8234#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -179,7 +180,7 @@
       <option name="presentableId" value="Default" />
       <updated>1522234950381</updated>
       <workItem from="1522234951855" duration="23574000" />
-      <workItem from="1522312163881" duration="51970000" />
+      <workItem from="1522312163881" duration="53941000" />
     </task>
     <task id="LOCAL-00001" summary="WhichWay minor mistake corrected&#10;6a2w2e">
       <created>1522350082658</created>
@@ -237,11 +238,18 @@
       <option name="project" value="LOCAL" />
       <updated>1522463185797</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="InToPost minor errors corrected&#10;7a3w">
+      <created>1522499505209</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1522499505209</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="75544000" />
+    <option name="totallyTimeSpent" value="77515000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1079" height="800" extended-state="6" />
@@ -319,11 +327,12 @@
     <MESSAGE value="NOT OK. STARTING OVER." />
     <MESSAGE value="New Start.&#10;5a5w" />
     <MESSAGE value="Starting symbol could be wrong. Fixed.&#10;7a3w" />
-    <option name="LAST_COMMIT_MESSAGE" value="Starting symbol could be wrong. Fixed.&#10;7a3w" />
+    <MESSAGE value="InToPost minor errors corrected&#10;7a3w" />
+    <option name="LAST_COMMIT_MESSAGE" value="InToPost minor errors corrected&#10;7a3w" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="109" />
+      <option name="time" value="111" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
@@ -366,11 +375,10 @@
             <element signature="e#1786#1932#0" expanded="false" />
             <element signature="e#1933#1975#0" expanded="false" />
             <element signature="e#1976#2023#0" expanded="false" />
-            <element signature="e#3744#4055#0" expanded="false" />
-            <element signature="e#4056#6269#0" expanded="false" />
-            <element signature="e#6270#6353#0" expanded="false" />
-            <element signature="e#6354#6409#0" expanded="false" />
-            <element signature="e#7841#8206#0" expanded="false" />
+            <element signature="e#3745#4056#0" expanded="false" />
+            <element signature="e#6298#6381#0" expanded="false" />
+            <element signature="e#6382#6437#0" expanded="false" />
+            <element signature="e#7869#8234#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -416,8 +424,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="358" column="1" lean-forward="true" selection-start-line="358" selection-start-column="1" selection-end-line="358" selection-end-column="1" />
+        <state relative-caret-position="226">
+          <caret line="171" column="29" lean-forward="true" selection-start-line="171" selection-start-column="29" selection-end-line="171" selection-end-column="29" />
           <folding>
             <element signature="e#268#638#1" expanded="false" />
             <element signature="e#640#834#0" expanded="false" />
@@ -431,11 +439,10 @@
             <element signature="e#1786#1932#0" expanded="false" />
             <element signature="e#1933#1975#0" expanded="false" />
             <element signature="e#1976#2023#0" expanded="false" />
-            <element signature="e#3744#4055#0" expanded="false" />
-            <element signature="e#4056#6269#0" expanded="false" />
-            <element signature="e#6270#6353#0" expanded="false" />
-            <element signature="e#6354#6409#0" expanded="false" />
-            <element signature="e#7841#8206#0" expanded="false" />
+            <element signature="e#3745#4056#0" expanded="false" />
+            <element signature="e#6298#6381#0" expanded="false" />
+            <element signature="e#6382#6437#0" expanded="false" />
+            <element signature="e#7869#8234#0" expanded="false" />
           </folding>
         </state>
       </provider>
