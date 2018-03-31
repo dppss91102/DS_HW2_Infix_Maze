@@ -300,15 +300,16 @@ string infix_to_postfix(string in){
                     out += ' ';
                     out += operators.top_o();
                     operators.pop();
-                } operators.pop();
+                }
+                operators.pop();
                 break;
             case '+':
             case '-':
             case '*':
             case '/':
                 out += ' ';
-                if (getPriority(i) < getPriority(operators.top_o()) &&  operators.isEmpty()) {
-                    while ( operators.isEmpty() && operators.top_o() != '(') {
+                if (getPriority(i) < getPriority(operators.top_o()) || operators.isEmpty()) {
+                    while (!operators.isEmpty() && operators.top_o() != '(') {
                         out += operators.top_o();
                         out += ' ';
                  operators.pop();
@@ -327,7 +328,7 @@ string infix_to_postfix(string in){
 
     }
 
-    while ( operators.isEmpty()){
+    while (!operators.isEmpty()){
         out += ' ';
         out += operators.top_o(); operators.pop();
     }
