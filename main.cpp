@@ -120,7 +120,7 @@ int main(){
     cin >> n;
     cout << n << endl;
 
-    while (n > 0){
+    while (n-- > 0){
         cin >> width;
         cin >> height;
         cout << width << endl;
@@ -175,7 +175,6 @@ int main(){
             free(matrix[i]);
         }
         free(matrix);
-        n--;
     }
 }
 
@@ -228,6 +227,9 @@ bool solveMaze(char** matrix, int r, int c){
             return false;
     }
 
+    if (path.contains(r, c))
+        return false;
+
     if (c == width - 1 && r == height - 1){
         if (isOperator(matrix[r][c]) || matrix[r][c] == '(')
             return false;
@@ -241,9 +243,6 @@ bool solveMaze(char** matrix, int r, int c){
         }
 
     } else{
-
-        if (path.contains(r, c))
-            return false;
 
         if (matrix[r][c] == '(')
             path.pare++;
@@ -286,43 +285,40 @@ bool isNumber(char c){
 }
 
 string infix_to_postfix(string in){
-    string out = "";
-    Stack operands;
-    int p = 0;
+    string out;
+    Stack operators;
 
     for (char i : in) {
         switch (i){
             case '0' ... '9':
                 out += i;
                 break;
-            case '(':
-                operands.push(i);
+            case '(': operators.push(i);
                 break;
             case ')':
-                while (operands.top_o() != '('){
+                while (operators.top_o() != '('){
                     out += ' ';
-                    out += operands.top_o();
-                    operands.pop();
-                }
-                operands.pop();
+                    out += operators.top_o();
+                    operators.pop();
+                } operators.pop();
                 break;
             case '+':
             case '-':
             case '*':
             case '/':
                 out += ' ';
-                if (getPriority(i) < getPriority(operands.top_o()) && !operands.isEmpty()) {
-                    while (!operands.isEmpty() && operands.top_o() != '(') {
-                        out += operands.top_o();
+                if (getPriority(i) < getPriority(operators.top_o()) &&  operators.isEmpty()) {
+                    while ( operators.isEmpty() && operators.top_o() != '(') {
+                        out += operators.top_o();
                         out += ' ';
-                        operands.pop();
+                 operators.pop();
                     }
-                    operands.push(i);
-                } else if (getPriority(i) == getPriority(operands.top_o())){
+             operators.push(i);
+                } else if (getPriority(i) == getPriority(operators.top_o())){
                     out += i;
                     out += ' ';
                 } else{
-                    operands.push(i);
+             operators.push(i);
                 }
                 break;
             default:
@@ -331,10 +327,9 @@ string infix_to_postfix(string in){
 
     }
 
-    while (!operands.isEmpty()){
+    while ( operators.isEmpty()){
         out += ' ';
-        out += operands.top_o();
-        operands.pop();
+        out += operators.top_o(); operators.pop();
     }
 
     out += ' ';

@@ -39,8 +39,8 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="222" column="33" lean-forward="true" selection-start-line="222" selection-start-column="33" selection-end-line="222" selection-end-column="33" />
+            <state relative-caret-position="30">
+              <caret line="150" column="60" lean-forward="true" selection-start-line="150" selection-start-column="60" selection-end-line="150" selection-end-column="60" />
               <folding>
                 <element signature="e#268#638#1" expanded="false" />
                 <element signature="e#640#834#0" expanded="false" />
@@ -54,10 +54,12 @@
                 <element signature="e#1786#1932#0" expanded="false" />
                 <element signature="e#1933#1975#0" expanded="false" />
                 <element signature="e#1976#2023#0" expanded="false" />
-                <element signature="e#6289#6372#0" expanded="false" />
-                <element signature="e#6373#6428#0" expanded="false" />
-                <element signature="e#6430#7907#0" expanded="false" />
-                <element signature="e#7908#8273#0" expanded="false" />
+                <element signature="e#3744#4055#0" expanded="false" />
+                <element signature="e#4056#6269#0" expanded="false" />
+                <element signature="e#6270#6353#0" expanded="false" />
+                <element signature="e#6354#6409#0" expanded="false" />
+                <element signature="e#6411#7825#0" expanded="false" />
+                <element signature="e#7826#8191#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -67,8 +69,8 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>operands</find>
       <find>okWithOperands</find>
+      <find>operands</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -178,7 +180,7 @@
       <option name="presentableId" value="Default" />
       <updated>1522234950381</updated>
       <workItem from="1522234951855" duration="23574000" />
-      <workItem from="1522312163881" duration="49165000" />
+      <workItem from="1522312163881" duration="51443000" />
     </task>
     <task id="LOCAL-00001" summary="WhichWay minor mistake corrected&#10;6a2w2e">
       <created>1522350082658</created>
@@ -222,11 +224,18 @@
       <option name="project" value="LOCAL" />
       <updated>1522431458301</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Starting symbol could be wrong. Fixed.&#10;7a3w">
+      <created>1522431897681</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1522431897681</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72739000" />
+    <option name="totallyTimeSpent" value="75017000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1079" height="800" extended-state="6" />
@@ -242,7 +251,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39889959" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39889959" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -303,17 +312,11 @@
     <MESSAGE value="parentheses problem solved&#10;5a5w" />
     <MESSAGE value="NOT OK. STARTING OVER." />
     <MESSAGE value="New Start.&#10;5a5w" />
-    <option name="LAST_COMMIT_MESSAGE" value="New Start.&#10;5a5w" />
+    <MESSAGE value="Starting symbol could be wrong. Fixed.&#10;7a3w" />
+    <option name="LAST_COMMIT_MESSAGE" value="Starting symbol could be wrong. Fixed.&#10;7a3w" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/main.cpp</url>
-          <line>145</line>
-          <option name="timeStamp" value="107" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="108" />
     </breakpoint-manager>
     <watches-manager>
@@ -357,10 +360,12 @@
             <element signature="e#1786#1932#0" expanded="false" />
             <element signature="e#1933#1975#0" expanded="false" />
             <element signature="e#1976#2023#0" expanded="false" />
-            <element signature="e#6289#6372#0" expanded="false" />
-            <element signature="e#6373#6428#0" expanded="false" />
-            <element signature="e#6430#7907#0" expanded="false" />
-            <element signature="e#7908#8273#0" expanded="false" />
+            <element signature="e#3744#4055#0" expanded="false" />
+            <element signature="e#4056#6269#0" expanded="false" />
+            <element signature="e#6270#6353#0" expanded="false" />
+            <element signature="e#6354#6409#0" expanded="false" />
+            <element signature="e#6411#7825#0" expanded="false" />
+            <element signature="e#7826#8191#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -406,8 +411,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="222" column="33" lean-forward="true" selection-start-line="222" selection-start-column="33" selection-end-line="222" selection-end-column="33" />
+        <state relative-caret-position="30">
+          <caret line="150" column="60" lean-forward="true" selection-start-line="150" selection-start-column="60" selection-end-line="150" selection-end-column="60" />
           <folding>
             <element signature="e#268#638#1" expanded="false" />
             <element signature="e#640#834#0" expanded="false" />
@@ -421,10 +426,12 @@
             <element signature="e#1786#1932#0" expanded="false" />
             <element signature="e#1933#1975#0" expanded="false" />
             <element signature="e#1976#2023#0" expanded="false" />
-            <element signature="e#6289#6372#0" expanded="false" />
-            <element signature="e#6373#6428#0" expanded="false" />
-            <element signature="e#6430#7907#0" expanded="false" />
-            <element signature="e#7908#8273#0" expanded="false" />
+            <element signature="e#3744#4055#0" expanded="false" />
+            <element signature="e#4056#6269#0" expanded="false" />
+            <element signature="e#6270#6353#0" expanded="false" />
+            <element signature="e#6354#6409#0" expanded="false" />
+            <element signature="e#6411#7825#0" expanded="false" />
+            <element signature="e#7826#8191#0" expanded="false" />
           </folding>
         </state>
       </provider>
