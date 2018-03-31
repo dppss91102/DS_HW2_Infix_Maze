@@ -245,7 +245,8 @@ bool solveMaze(char** matrix, int r, int c){
         if (matrix[r][c] == ')')
             path.pare--;
         if (path.pare != 0) {
-            path.pare++;
+            if (matrix[r][c] == ')')
+                path.pare++;
             return false;
         } else{
             path.push(r, c);
