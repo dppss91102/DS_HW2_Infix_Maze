@@ -185,6 +185,8 @@ int main(){
         free(matrix);
         path.init();
     }
+
+    return 0;
 }
 
 char** makeMatrix(int w, int h){
@@ -319,19 +321,12 @@ string infix_to_postfix(string in){
             case '*':
             case '/':
                 out += ' ';
-                if (getPriority(i) < getPriority(operators.top_o()) || operators.isEmpty()) {
-                    while (!operators.isEmpty() && operators.top_o() != '(') {
-                        out += operators.top_o();
-                        out += ' ';
-                 operators.pop();
-                    }
-             operators.push(i);
-                } else if (getPriority(i) == getPriority(operators.top_o())){
-                    out += i;
+                while (!operators.isEmpty() && operators.top_o() != '(' && getPriority(i) <= getPriority(operators.top_o())) {
+                    out += operators.top_o();
                     out += ' ';
-                } else{
-             operators.push(i);
+                    operators.pop();
                 }
+                operators.push(i);
                 break;
             default:
                 break;
