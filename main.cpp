@@ -24,6 +24,7 @@ public:
             a[i][1] = -1;
         }
     }
+    void init();
     bool push(int r, int c);
     bool pop();
     int top_r();
@@ -31,6 +32,13 @@ public:
     bool contains(int r, int c);
     bool isEmpty();
 };
+void Path::init(){
+    top = -1;
+    for (int i = 0; i < MAX; ++i) {
+        a[i][0] = -1;
+        a[i][1] = -1;
+    }
+}
 bool Path::push(int r, int c) {
     if (top == MAX - 1){
         //Stack Overflow
@@ -175,6 +183,7 @@ int main(){
             free(matrix[i]);
         }
         free(matrix);
+        path.init();
     }
 }
 
@@ -197,7 +206,7 @@ bool solveMaze(char** matrix, int r, int c){
     if (c < 0 || r < 0 || c >= width || r >= height)
         return false;
 
-    cout << r << ' ' << c << ' ' << matrix[r][c] << endl;
+    //cout << r << ' ' << c << ' ' << matrix[r][c] << endl;
 
     if (c != 0 || r != 0) {
         char last = matrix[path.top_r()][path.top_c()];
