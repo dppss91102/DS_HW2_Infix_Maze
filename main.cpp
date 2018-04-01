@@ -205,12 +205,16 @@ char** makeMatrix(int w, int h){
 }
 bool solveMaze(char** matrix, int r, int c){
 
+
     if (c < 0 || r < 0 || c >= width || r >= height)
+        return false;
+
+    if (path.contains(r, c))
         return false;
 
     //cout << r << ' ' << c << ' ' << matrix[r][c] << endl;
 
-    if (c != 0 || r != 0) {
+    if (!path.isEmpty()) {
         char last = matrix[path.top_r()][path.top_c()];
         switch (last) {
             case '0' ... '9':
@@ -238,8 +242,7 @@ bool solveMaze(char** matrix, int r, int c){
             return false;
     }
 
-    if (path.contains(r, c))
-        return false;
+
 
     if (c == width - 1 && r == height - 1){
         if (isOperator(matrix[r][c]) || matrix[r][c] == '(')
@@ -294,7 +297,7 @@ bool isOperator(char c){
     return c == '+' || c == '-' || c == '*' || c == '/';
 }
 bool isNumber(char c){
-    return c > '0' && c < '9';
+    return c >= '0' && c <= '9';
 }
 
 string infix_to_postfix(string in){
