@@ -39,13 +39,14 @@ There are some rules to be followed.
 ```
 
 ### [Sample Output](sampleOut.txt)
-```1
-   3
-   3
-   1 5 4 
-   + - * 
-   + 6 8 
-   Yes
-   15 - 68 
-   15 68 - 
+```
+1
+3
+3
+1 5 4 
++ - * 
++ 6 8 
+Yes
+15 - 68 
+15 68 - 
 ```
